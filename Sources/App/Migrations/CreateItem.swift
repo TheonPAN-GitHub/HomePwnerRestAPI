@@ -12,9 +12,10 @@ struct CreateItem : Migration {
         database.schema("items")
             .id()
             .field("name", .string, .required)
-            .field("value_in_dollar", .string, .required)
-            .field("serial_number", .string, .required)
-            .field("date_created", .string, .required)
+            .field("value_in_dollar", .int, .required)
+            .field("serial_number", .string)
+            .field("date_created", .date, .required)
+            .create()
     }
     func revert(on database: Database) -> EventLoopFuture<Void> {
         database.schema("items").delete()
