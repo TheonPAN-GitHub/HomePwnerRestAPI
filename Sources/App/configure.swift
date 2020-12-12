@@ -14,8 +14,12 @@ public func configure(_ app: Application) throws {
         password: Environment.get("DATABASE_PASSWORD") ?? "vapor_password",
         database: Environment.get("DATABASE_NAME") ?? "vapor_database"
     ), as: .psql)
-
-    app.migrations.add(CreateTodo())
+    
+    app.migrations.add(CreateItem())
+    
+    app.logger.logLevel = .debug
+    
+    try app.autoMigrate().wait()
 
     // register routes
     try routes(app)
