@@ -13,10 +13,11 @@ struct ItemController : RouteCollection{
         let itemRoutesGroup = routes.grouped("api", "items")
         itemRoutesGroup.post(use: createHandler)
         itemRoutesGroup.get(use : getAllHandler)
-        
+        itemRoutesGroup.put(use : updateHandler)
     }
     
     func createHandler(_ req : Request) throws -> EventLoopFuture<Item> {
+        print(req.body.string)
         let itemFromRequest = try req.content.decode(Item.self)
         
         return itemFromRequest.save(on: req.db).map{itemFromRequest}
@@ -24,5 +25,20 @@ struct ItemController : RouteCollection{
     
     func getAllHandler(_ req:Request) throws -> EventLoopFuture<[Item]> {
         return Item.query(on:req.db).all()
+    }
+    
+    func updateHandler(_ req:Request) throws -> EventLoopFuture<Item> {
+        let updatedItem = try req.content.decode(Item.self)
+        return Item.find(req.parameters.get("itemID"), on: req.db)
+            .unwrap(or: Abort(.notFound))
+            .flatMap{ item in
+                item.name = updatedItem.name
+                item.serialNumber = updatedItem.serialNumber
+                item.valueInDollars = updatedItem.valueInDollars
+                item.dateCreated = updatedItem.dateCreated
+                return item.save(on: req.db).map{
+                    item
+                }
+            }
     }
 }

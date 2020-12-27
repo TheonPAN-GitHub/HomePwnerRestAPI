@@ -18,7 +18,7 @@ final class Item : Model, Content {
     var name:String
     
     @Field(key: "value_in_dollar")
-    var valueInDollar:Int
+    var valueInDollars:Int
     
     @Field(key: "serial_number")
     var serialNumber:String?
@@ -28,10 +28,10 @@ final class Item : Model, Content {
     
     init(){}
     
-    init(id:UUID? = nil, name:String, valueInDollar:Int, serialNumber:String? = nil, dateCreated:Date){
+    init(id:UUID? = nil, name:String, valueInDollars:Int, serialNumber:String? = nil, dateCreated:Date){
         self.id = id
         self.name = name
-        self.valueInDollar = valueInDollar
+        self.valueInDollars = valueInDollars
         self.serialNumber = serialNumber
         self.dateCreated = dateCreated
     }

@@ -12,9 +12,9 @@ import Vapor
 extension Item {
     static func create(name : String = "MacBook Pro 16",
                        serialNumber :String? = nil,
-                       valueInDollar : Int = 25000) throws -> Item {
+                       valueInDollars : Int = 25000) throws -> Item {
         let item = Item(name:name,
-                        valueInDollar:valueInDollar,
+                        valueInDollars:valueInDollars,
                         serialNumber:serialNumber,
                         dateCreated:Date())
         return item

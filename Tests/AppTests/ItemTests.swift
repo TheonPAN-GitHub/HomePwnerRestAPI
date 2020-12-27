@@ -17,14 +17,14 @@ final class ItemTests : XCTestCase {
     }
     
     func testItemCanBeSavedWithAPI() throws {
-        let item = try Item.create(name: "MacBook Pro", serialNumber: "123456", valueInDollar: 25000)
+        let item = try Item.create(name: "MacBook Pro", serialNumber: "123456", valueInDollars: 25000)
         try testApp.test(.POST, itemURI, beforeRequest :{req in
             try req.content.encode(item)
         }, afterResponse: {response in
             let receivedItem = try response.content.decode(Item.self)
             XCTAssertEqual(receivedItem.name, item.name)
             XCTAssertEqual(receivedItem.serialNumber, item.serialNumber)
-            XCTAssertEqual(receivedItem.valueInDollar, item.valueInDollar)
+            XCTAssertEqual(receivedItem.valueInDollars, item.valueInDollars)
             XCTAssertNotNil(receivedItem.id)
             XCTAssertNotNil(receivedItem.dateCreated)
             
@@ -36,7 +36,7 @@ final class ItemTests : XCTestCase {
             XCTAssertEqual(items.count, 1)
             XCTAssertEqual(items[0].name, item.name)
             XCTAssertEqual(items[0].serialNumber, item.serialNumber)
-            XCTAssertEqual(items[0].valueInDollar, item.valueInDollar)
+            XCTAssertEqual(items[0].valueInDollars, item.valueInDollars)
             XCTAssertNotNil(items[0].id)
             XCTAssertNotNil(items[0].dateCreated)
         })

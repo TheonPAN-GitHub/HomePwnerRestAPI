@@ -17,14 +17,14 @@ final class ItemImageTests : XCTestCase {
     }
     
     func testItemImageCanBeSavedWithAPI() throws {
-        let item = try Item.create(name: "MacBook Pro", serialNumber: "123456", valueInDollar: 25000)
+        let item = try Item.create(name: "MacBook Pro", serialNumber: "123456", valueInDollars: 25000)
         try testApp.test(.POST, itemURI, beforeRequest :{req in
             try req.content.encode(item)
         }, afterResponse: {response in
             let receivedItem = try response.content.decode(Item.self)
             XCTAssertEqual(receivedItem.name, item.name)
             XCTAssertEqual(receivedItem.serialNumber, item.serialNumber)
-            XCTAssertEqual(receivedItem.valueInDollar, item.valueInDollar)
+            XCTAssertEqual(receivedItem.valueInDollars, item.valueInDollars)
             XCTAssertNotNil(receivedItem.id)
             XCTAssertNotNil(receivedItem.dateCreated)
             
