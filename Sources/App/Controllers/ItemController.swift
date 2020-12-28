@@ -13,7 +13,7 @@ struct ItemController : RouteCollection{
         let itemRoutesGroup = routes.grouped("api", "items")
         itemRoutesGroup.post(use: createHandler)
         itemRoutesGroup.get(use : getAllHandler)
-        itemRoutesGroup.put(use : updateHandler)
+        itemRoutesGroup.put(":itemID", use : updateHandler)
     }
     
     func createHandler(_ req : Request) throws -> EventLoopFuture<Item> {
